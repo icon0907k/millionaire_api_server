@@ -1,5 +1,5 @@
 # 1. OpenJDK 23 이미지를 기반으로 설정
-FROM openjdk:23-jdk-slim-alpine
+FROM openjdk:17-jdk-slim
 
 # 2. 작업 디렉토리 설정
 WORKDIR /app
