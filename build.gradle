@@ -30,3 +30,8 @@ dependencies {
 tasks.named('test') {
 	useJUnitPlatform()
 }
+// JAR 파일 설정 수정
+bootJar {
+	archiveBaseName = 'afterwork.millionaire'
+	archiveVersion = '0.1'
+}
