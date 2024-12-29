@@ -1,4 +1,4 @@
-package afterwork.millionaire.apiServer.actuator.health;
+package afterwork.millionaire.actuator.health;
 
 import org.springframework.boot.actuate.health.Health;
 import org.springframework.boot.actuate.health.HealthIndicator;

@@ -1,4 +1,4 @@
-package afterwork.millionaire.apiServer;
+package afterwork.millionaire;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

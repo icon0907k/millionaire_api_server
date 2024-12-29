@@ -1,4 +1,4 @@
-package afterwork.millionaire.apiServer.actuator.health;
+package afterwork.millionaire.actuator.health;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
