@@ -1,8 +1,14 @@
-# 1. OpenJDK 17 이미지를 기반으로 설정
+FROM gradle:7.6-jdk17 as builder
+
+COPY . /home/gradle/project
+
+WORKDIR /home/gradle/project
+RUN gradle bootJar --no-daemon
+
 FROM openjdk:17-jdk-slim
 
-# 2. 환경 변수 설정 (기본값: test)
+COPY --from=builder /home/gradle/project/build/libs/afterwork.millionaire-0.1.jar /app/afterwork.millionaire-0.1.jar
+
 ENV SPRING_PROFILES_ACTIVE=test
 
-# 3. 컨테이너 시작 시 실행할 명령어 설정
-ENTRYPOINT ["java", "-jar", "build/libs/afterwork.millionaire-0.1.jar", "--spring.profiles.active=${SPRING_PROFILES_ACTIVE}"]
+ENTRYPOINT ["java", "-jar", "/app/afterwork.millionaire-0.1.jar", "--spring.profiles.active=${SPRING_PROFILES_ACTIVE}"]
