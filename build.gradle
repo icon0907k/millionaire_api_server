@@ -18,11 +18,23 @@ repositories {
 }
 
 dependencies {
-
+	// Spring Boot 기본 스타터
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter'
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 
+	// Spring Boot Validation 스타터
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+	// Hibernate Validator (jakarta.validation)
+	implementation 'org.hibernate.validator:hibernate-validator:7.0.1.Final'
+	implementation 'jakarta.validation:jakarta.validation-api:2.0.2'
+
+	// Lombok
+	compileOnly 'org.projectlombok:lombok:1.18.26'
+	annotationProcessor 'org.projectlombok:lombok:1.18.26'
+
+	// 테스트 의존성
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
@@ -30,6 +42,7 @@ dependencies {
 tasks.named('test') {
 	useJUnitPlatform()
 }
+
 // JAR 파일 설정 수정
 bootJar {
 	archiveBaseName = 'afterwork.millionaire'
