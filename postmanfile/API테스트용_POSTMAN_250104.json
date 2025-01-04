@@ -23,14 +23,14 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"grant_type\": \"client_credentials\",\n  \"appkey\": \"\",\n  \"secretkey\": \"\"\n}",
+							"raw": "{\n  \"grant_type\": \"\",\n  \"appkey\": \"\",\n  \"secretkey\": \"\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
 								}
 							}
 						},
-						"url": "http://localhost:8080/oauth/connection-key/neco_h"
+						"url": "http://localhost:8080/oauth/realTimeConnectionKey/neco1"
 					},
 					"response": []
 				},
@@ -58,6 +58,24 @@
 						"body": {
 							"mode": "raw",
 							"raw": "{\n  \"CANO\": \"\",\n  \"ACNT_PRDT_CD\":\"\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8080/api/token"
+					},
+					"response": []
+				},
+				{
+					"name": "접근토큰발급",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"grant_type\": \"\",\n  \"appkey\": \"\",\n  \"secretKey\": \"\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"

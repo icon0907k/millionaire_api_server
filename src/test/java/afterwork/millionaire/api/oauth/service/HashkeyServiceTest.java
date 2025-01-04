@@ -1,6 +1,6 @@
 package afterwork.millionaire.api.oauth.service;
 
-import afterwork.millionaire.api.dto.KeyRequest;
+import afterwork.millionaire.api.oauth.dto.KeyRequest;
 import afterwork.millionaire.api.oauth.dto.HashkeyRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
