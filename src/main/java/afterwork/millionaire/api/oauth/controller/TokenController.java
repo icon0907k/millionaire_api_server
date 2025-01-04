@@ -10,7 +10,6 @@ import java.util.Map;
 
 /**
  * TokenController
- *
  * 이 컨트롤러는 OAuth 토큰을 발급하는 API 엔드포인트를 제공합니다.
  * 주로 사용자가 인증을 위해 필요한 액세스 토큰을 발급받을 수 있는 기능을 제공합니다.
  */

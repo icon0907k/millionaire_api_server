@@ -10,7 +10,6 @@ import java.util.Map;
 
 /**
  * RealTimeConnectionKeyController
- *
  * 이 컨트롤러는 실시간 웹소켓 접속키를 발급하는 API 엔드포인트를 제공합니다.
  * 주로 사용자에게 실시간 웹소켓 연결을 위한 접속 키를 발급하는 역할을 합니다.
  */

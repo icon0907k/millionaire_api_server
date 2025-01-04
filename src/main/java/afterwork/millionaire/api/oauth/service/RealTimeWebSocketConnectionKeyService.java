@@ -15,7 +15,6 @@ import java.util.Map;
 
 /**
  * RealTimeWebSocketConnectionKeyService
- *
  * 실시간 웹소켓 접속키를 발급하고 관리하는 서비스입니다.
  * 1회 접속키 발급 후 365일 동안 유효한 세션 유지.
  */

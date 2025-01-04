@@ -11,7 +11,6 @@ import java.util.Map;
 
 /**
  * HashkeyService
- *
  * 외부 API를 통해 해시 키를 요청하고, 응답을 처리하는 서비스 클래스입니다.
  */
 @Service
@@ -35,10 +34,9 @@ public class HashkeyService {
             RestTemplate restTemplate = new RestTemplate();
 
             // 외부 API 호출하여 응답 받기
-            ResponseEntity<Map<String, Object>> response = restTemplate.exchange(
-                    API_URL, HttpMethod.POST, entity, new ParameterizedTypeReference<>() {});
 
-            return response;
+            return restTemplate.exchange(
+                    API_URL, HttpMethod.POST, entity, new ParameterizedTypeReference<>() {});
         } catch (Exception e) {
             // 호출 실패 시 에러 로깅 후 에러 응답 반환
             log.error("외부 호출 에러: {}", e.getMessage(), e);

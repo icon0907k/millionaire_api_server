@@ -5,7 +5,6 @@ import lombok.Data;
 
 /**
  * HashkeyRequest
- *
  * 해시 키 요청에 필요한 주문 정보를 담고 있는 클래스입니다.
  */
 @Data

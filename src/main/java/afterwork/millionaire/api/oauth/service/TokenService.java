@@ -14,8 +14,7 @@ import org.springframework.http.MediaType;
 import java.util.Map;
 
 /**
- * TokenService
- *
+ * TokenServices
  * OAuth2 토큰을 발급받기 위한 서비스입니다.
  * 주어진 요청 정보로 액세스 토큰을 발급받아 반환합니다.
  */

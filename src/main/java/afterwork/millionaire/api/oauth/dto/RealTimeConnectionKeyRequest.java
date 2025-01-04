@@ -5,7 +5,6 @@ import lombok.Data;
 
 /**
  * RealTimeConnectionKeyRequest
- *
  * 실시간 접속키 요청에 필요한 파라미터들을 담고 있는 클래스입니다.
  */
 @Data

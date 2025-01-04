@@ -5,7 +5,6 @@ import lombok.Data;
 
 /**
  * TokenRequest
- *
  * 토큰 요청에 필요한 파라미터들을 담고 있는 클래스입니다.
  */
 @Data
