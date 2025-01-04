@@ -19,7 +19,6 @@ import static org.mockito.Mockito.when;
 
 /**
  * HashkeyServiceTest
- *
  * HashkeyService의 동작을 검증하기 위한 테스트 클래스.
  * RestTemplate을 모킹하여 실제 HTTP 요청 없이 서비스의 로직을 테스트합니다.
  */
@@ -38,7 +37,7 @@ public class HashkeyServiceTest {
     @BeforeEach
     public void setUp() {
         // Mockito 초기화
-        MockitoAnnotations.initMocks(this);
+        MockitoAnnotations.openMocks(this);
 
         // 요청 객체 및 헤더 초기화
         hashkeyRequest = new HashkeyRequest();
