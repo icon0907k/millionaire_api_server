@@ -2,6 +2,7 @@ package afterwork.millionaire.api.oauth.service;
 
 import afterwork.millionaire.api.oauth.dto.TokenRequest;
 import afterwork.millionaire.api.oauth.dto.RevokeTokenRequest;
+import afterwork.millionaire.config.ApiProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
@@ -21,14 +22,14 @@ import java.util.Map;
 @Slf4j
 public class TokenService {
 
-    private static final String API_URL = "https://openapivts.koreainvestment.com:29443/oauth2/tokenP";
-    private static final String REVOKE_API_URL = "https://openapivts.koreainvestment.com:29443/oauth2/revokeP";
-
     private final WebClient webClient;
+    private final ApiProperties apiProperties;
 
+    // 생성자: WebClient와 ApiProperties를 의존성 주입
     @Autowired
-    public TokenService(WebClient.Builder webClientBuilder) {
-        this.webClient = webClientBuilder.baseUrl(API_URL).build();
+    public TokenService(WebClient.Builder webClientBuilder, ApiProperties apiProperties) {
+        this.webClient = webClientBuilder.baseUrl(apiProperties.getBaseUrl()).build();
+        this.apiProperties = apiProperties;
     }
 
     /**
@@ -38,17 +39,18 @@ public class TokenService {
      * @return 액세스 토큰 또는 에러 응답
      */
     public Mono<ResponseEntity<Map<String, Object>>> getAccessToken(TokenRequest tokenRequest) {
-        try {
-            return webClient.post()
-                    .uri(API_URL)
-                    .header("Content-Type", "application/json; charset=UTF-8")
-                    .bodyValue(tokenRequest)
-                    .retrieve()
-                    .toEntity(new ParameterizedTypeReference<>() {});
-        } catch (Exception e) {
-            log.error("외부 호출 에러: {}", e.getMessage(), e);
-            return Mono.just(afterwork.millionaire.api.util.ErrorUtils.createErrorResponse("외부 호출 에러", e.getMessage()));
-        }
+        // 액세스 토큰 발급 요청
+        return webClient.post()
+                .uri(apiProperties.getToken())  // 토큰 발급 URI
+                .header("Content-Type", "application/json; charset=UTF-8")  // 요청 헤더 설정
+                .bodyValue(tokenRequest)  // 요청 본문 설정
+                .retrieve()
+                .toEntity(new ParameterizedTypeReference<Map<String, Object>>() {})  // 응답을 Map으로 변환
+                .onErrorResume(e -> {
+                    // 에러 발생 시 처리
+                    log.error("외부 호출 에러: {}", e.getMessage(), e);
+                    return Mono.just(afterwork.millionaire.api.util.ErrorUtils.createErrorResponse("외부 호출 에러", e.getMessage()));
+                });
     }
 
     /**
@@ -58,16 +60,17 @@ public class TokenService {
      * @return 응답
      */
     public Mono<ResponseEntity<Map<String, Object>>> revokeToken(RevokeTokenRequest request) {
-        try {
-            return webClient.post()
-                    .uri(REVOKE_API_URL)
-                    .header("Content-Type", "application/json; charset=UTF-8")
-                    .bodyValue(request)
-                    .retrieve()
-                    .toEntity(new ParameterizedTypeReference<>() {});
-        } catch (Exception e) {
-            log.error("외부 호출 에러: {}", e.getMessage(), e);
-            return Mono.just(afterwork.millionaire.api.util.ErrorUtils.createErrorResponse("외부 호출 에러", e.getMessage()));
-        }
+        // 토큰 취소 요청
+        return webClient.post()
+                .uri(apiProperties.getRevoke())  // 토큰 취소 URI
+                .header("Content-Type", "application/json; charset=UTF-8")  // 요청 헤더 설정
+                .bodyValue(request)  // 요청 본문 설정
+                .retrieve()
+                .toEntity(new ParameterizedTypeReference<Map<String, Object>>() {})  // 응답을 Map으로 변환
+                .onErrorResume(e -> {
+                    // 에러 발생 시 처리
+                    log.error("외부 호출 에러: {}", e.getMessage(), e);
+                    return Mono.just(afterwork.millionaire.api.util.ErrorUtils.createErrorResponse("외부 호출 에러", e.getMessage()));
+                });
     }
 }

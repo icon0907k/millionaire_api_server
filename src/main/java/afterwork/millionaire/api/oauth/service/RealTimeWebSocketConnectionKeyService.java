@@ -1,13 +1,16 @@
 package afterwork.millionaire.api.oauth.service;
 
 import afterwork.millionaire.api.oauth.dto.RealTimeConnectionKeyRequest;
+import afterwork.millionaire.config.ApiProperties;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
 
 import java.io.File;
 import java.io.IOException;
@@ -22,9 +25,18 @@ import java.util.Map;
 @Slf4j
 public class RealTimeWebSocketConnectionKeyService {
 
-    private static final String API_URL = "https://openapivts.koreainvestment.com:29443/oauth2/Approval";
+    // 접속키를 저장할 파일 경로
     private static final String CONNECTION_KEY_FILE = "src/main/java/afterwork/millionaire/keys/realTimeWebSocketConnectionKeys.json";
     private static final ObjectMapper objectMapper = new ObjectMapper();
+    private final WebClient webClient;
+    private final ApiProperties apiProperties;
+
+    // 의존성 주입을 위한 생성자
+    @Autowired
+    public RealTimeWebSocketConnectionKeyService(WebClient.Builder webClientBuilder, ApiProperties apiProperties) {
+        this.webClient = webClientBuilder.baseUrl(apiProperties.getBaseUrl()).build();
+        this.apiProperties = apiProperties;
+    }
 
     /**
      * 승인 키를 생성하거나 기존 키를 반환합니다.
@@ -34,13 +46,15 @@ public class RealTimeWebSocketConnectionKeyService {
      * @param contentType 요청의 콘텐츠 타입
      * @return 승인 키 또는 에러 응답
      */
-    public ResponseEntity<Map<String, Object>> generateConnectionKey(String userId, RealTimeConnectionKeyRequest request, String contentType) {
+    public Mono<ResponseEntity<Map<String, Object>>> generateConnectionKey(String userId, RealTimeConnectionKeyRequest request, String contentType) {
+        // 기존 접속 키를 파일에서 로드
         Map<String, Map<String, String>> connectionKeys = loadConnectionKeysFromFile();
 
-        // 기존 승인 키 조회
+        // 기존 승인 키가 존재하는지 확인
         Map<String, String> existingKey = findConnectionKey(connectionKeys, userId, request.getAppkey());
         if (existingKey != null) {
-            return ResponseEntity.ok(createResponse(userId, existingKey.get("approval_key")));
+            // 기존 키가 있으면 그 키를 반환
+            return Mono.just(ResponseEntity.ok(createResponse(userId, existingKey.get("approval_key"))));
         }
 
         // 새로운 승인 키 발급
@@ -70,27 +84,35 @@ public class RealTimeWebSocketConnectionKeyService {
      * @param contentType 요청 콘텐츠 타입
      * @return 승인 키 또는 에러 응답
      */
-    private ResponseEntity<Map<String, Object>> issueNewConnectionKey(String userId, RealTimeConnectionKeyRequest request, String contentType) {
+    private Mono<ResponseEntity<Map<String, Object>>> issueNewConnectionKey(String userId, RealTimeConnectionKeyRequest request, String contentType) {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.valueOf(contentType));
         HttpEntity<RealTimeConnectionKeyRequest> entity = new HttpEntity<>(request, headers);
 
-        RestTemplate restTemplate = new RestTemplate();
-        try {
-            ResponseEntity<Map<String, Object>> response = restTemplate.exchange(
-                    API_URL, HttpMethod.POST, entity, new ParameterizedTypeReference<>() {});
-
-            if (response.getStatusCode() == HttpStatus.OK && response.getBody() != null) {
-                Map<String, Object> responseBody = response.getBody();
-                saveConnectionKey(userId, (String) responseBody.get("approval_key"), request.getAppkey());
-                return ResponseEntity.ok(responseBody);
-            }
-
-            return ResponseEntity.ok(response.getBody());
-        } catch (Exception e) {
-            log.error("외부 호출 에러: {}", e.getMessage(), e);
-            return afterwork.millionaire.api.util.ErrorUtils.createErrorResponse("외부 호출 에러", e.getMessage());
-        }
+        // 외부 API를 호출하여 승인 키 발급
+        return webClient.post()
+                .uri(apiProperties.getApproval())
+                .headers(httpHeaders -> httpHeaders.addAll(headers))
+                .bodyValue(request)
+                .retrieve()
+                .onStatus(HttpStatusCode::is4xxClientError, response -> {
+                    log.error("4xx 에러 발생: {}", response.statusCode());
+                    return Mono.error(new RuntimeException("클라이언트 오류"));
+                })
+                .onStatus(HttpStatusCode::is5xxServerError, response -> {
+                    log.error("5xx 에러 발생: {}", response.statusCode());
+                    return Mono.error(new RuntimeException("서버 오류"));
+                })
+                .bodyToMono(new ParameterizedTypeReference<Map<String, Object>>() {})
+                .flatMap(responseBody -> {
+                    if (responseBody != null) {
+                        // 새로운 승인 키 발급 후 파일에 저장
+                        saveConnectionKey(userId, (String) responseBody.get("approval_key"), request.getAppkey());
+                        return Mono.just(ResponseEntity.ok(responseBody));
+                    }
+                    return Mono.just(ResponseEntity.ok(responseBody));
+                })
+                .doOnError(e -> log.error("외부 호출 에러: {}", e.getMessage(), e));
     }
 
     /**
@@ -102,6 +124,7 @@ public class RealTimeWebSocketConnectionKeyService {
         try {
             File file = new File(CONNECTION_KEY_FILE);
             if (file.exists()) {
+                // 파일에서 데이터를 읽어 Map으로 변환
                 return objectMapper.readValue(file, new TypeReference<>() {});
             }
         } catch (IOException e) {
@@ -120,6 +143,7 @@ public class RealTimeWebSocketConnectionKeyService {
     private void saveConnectionKey(String userId, String approvalKey, String appkey) {
         Map<String, Map<String, String>> connectionKeys = loadConnectionKeysFromFile();
         if (!connectionKeys.containsKey(userId)) {
+            // 새로운 키 저장
             Map<String, String> keyMap = new HashMap<>();
             keyMap.put("approval_key", approvalKey);
             keyMap.put("userId", userId);
@@ -127,6 +151,7 @@ public class RealTimeWebSocketConnectionKeyService {
             connectionKeys.put(userId, keyMap);
 
             try {
+                // 파일에 저장
                 objectMapper.writeValue(new File(CONNECTION_KEY_FILE), connectionKeys);
             } catch (IOException e) {
                 log.error("접속 키 저장 실패: {}", CONNECTION_KEY_FILE, e);

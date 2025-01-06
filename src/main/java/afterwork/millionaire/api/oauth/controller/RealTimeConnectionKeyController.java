@@ -5,6 +5,7 @@ import afterwork.millionaire.api.oauth.service.RealTimeWebSocketConnectionKeySer
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Mono;
 
 import java.util.Map;
 
@@ -35,7 +36,7 @@ public class RealTimeConnectionKeyController {
      * @return 접속키 발급 결과를 포함한 응답
      */
     @PostMapping("/{userId}")
-    public ResponseEntity<Map<String, Object>> getConnectionKey(
+    public Mono<ResponseEntity<Map<String, Object>>> getConnectionKey(
             @PathVariable String userId,  // URL 경로에서 사용자 ID를 추출
             @RequestBody RealTimeConnectionKeyRequest request,  // 요청 본문에서 승인 키 요청 정보를 받음
             @RequestHeader("Content-Type") String contentType  // 요청 헤더에서 콘텐츠 타입을 받음

@@ -40,8 +40,16 @@ public class TokenController {
         return tokenService.getAccessToken(tokenRequest);
     }
 
+    /**
+     * 액세스 토큰을 취소하는 엔드포인트입니다.
+     * 요청 본문에 포함된 취소 토큰 정보를 사용하여 액세스 토큰을 취소합니다.
+     *
+     * @param request 취소할 토큰의 요청 본문 데이터 객체
+     * @return 토큰 취소 결과를 포함한 응답
+     */
     @PostMapping("/revoke")
-    public Mono<ResponseEntity<Map<String, Object>>>  revokeToken(@RequestBody RevokeTokenRequest request) {
+    public Mono<ResponseEntity<Map<String, Object>>> revokeToken(@RequestBody RevokeTokenRequest request) {
+        // TokenService의 메서드를 호출하여 액세스 토큰을 취소하고 결과를 반환
         return tokenService.revokeToken(request);
     }
 }

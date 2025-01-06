@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Mono;
 
 import java.util.Map;
 
@@ -35,7 +36,7 @@ public class HashkeyController {
      * @return 해시 키 발급 결과를 포함한 응답을 반환
      */
     @PostMapping
-    public ResponseEntity<Map<String, Object>> getHashkey(
+    public Mono<ResponseEntity<Map<String, Object>>> getHashkey(
             @RequestBody HashkeyRequest requestDTO,  // 요청 본문에서 해시 키 요청 정보를 받음
             @RequestHeader String appkey,           // 요청 헤더에서 앱 키를 받음
             @RequestHeader String appsecret,        // 요청 헤더에서 앱 시크릿을 받음
