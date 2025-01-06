@@ -1,10 +1,12 @@
 package afterwork.millionaire.api.oauth.controller;
 
+import afterwork.millionaire.api.oauth.dto.RevokeTokenRequest;
 import afterwork.millionaire.api.oauth.dto.TokenRequest;
 import afterwork.millionaire.api.oauth.service.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Mono;
 
 import java.util.Map;
 
@@ -33,8 +35,13 @@ public class TokenController {
      * @return 액세스 토큰 발급 결과를 포함한 응답
      */
     @PostMapping
-    public ResponseEntity<Map<String, Object>> generateToken(@RequestBody TokenRequest tokenRequest) {
+    public Mono<ResponseEntity<Map<String, Object>>> generateToken(@RequestBody TokenRequest tokenRequest) {
         // TokenService의 메서드를 호출하여 액세스 토큰을 발급하고 결과를 반환
         return tokenService.getAccessToken(tokenRequest);
+    }
+
+    @PostMapping("/revoke")
+    public Mono<ResponseEntity<Map<String, Object>>>  revokeToken(@RequestBody RevokeTokenRequest request) {
+        return tokenService.revokeToken(request);
     }
 }
