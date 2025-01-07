@@ -11,7 +11,6 @@ import lombok.Data;
 @AllArgsConstructor
 public class RealTimeConnectionKeyRequest {
 
-    private String contentType;  // 콘텐츠 타입
     private String grant_type;   // 인증 유형
     private String appkey;       // 앱 키
     private String secretkey;    // 시크릿 키

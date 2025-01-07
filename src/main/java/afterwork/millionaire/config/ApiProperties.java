@@ -1,6 +1,7 @@
 package afterwork.millionaire.config;
 
 import lombok.Getter;
+import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
@@ -13,20 +14,16 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @ConfigurationProperties(prefix = "api")  // 'api' 접두어로 시작하는 속성들을 로드
 @Getter
+@Setter
 public class ApiProperties {
 
-    // API 기본 URL
-    private String baseUrl;
+    private String baseUrl;  // API 기본 URL
+    private String token;    // 토큰 발급 URI
+    private String revoke;    // 토큰 취소 URI
+    private String hashkey;    // 해시 키 요청 URI
+    private String approval;    // 승인 관련 URI
+    private String overseasPrice; // 해외주식 현재체결가 URI
+    private String overseasDailyPrice; // 해외주식 기간별시세 URI
+    private String overseasInquireDailyChartprice; // 해외주식 종목/지수/환율기간별시세 URI
 
-    // 토큰 발급 URI
-    private String token;
-
-    // 토큰 취소 URI
-    private String revoke;
-
-    // 해시 키 요청 URI
-    private String hashkey;
-
-    // 승인 관련 URI
-    private String Approval;
 }

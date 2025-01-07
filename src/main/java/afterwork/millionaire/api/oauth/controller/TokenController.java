@@ -4,6 +4,7 @@ import afterwork.millionaire.api.oauth.dto.RevokeTokenRequest;
 import afterwork.millionaire.api.oauth.dto.TokenRequest;
 import afterwork.millionaire.api.oauth.service.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
@@ -31,13 +32,13 @@ public class TokenController {
      * 액세스 토큰을 발급받는 엔드포인트입니다.
      * 요청 본문에 포함된 토큰 요청 정보를 사용하여 액세스 토큰을 발급합니다.
      *
-     * @param tokenRequest 토큰 발급을 위한 요청 본문 데이터 객체
+     * @param request 토큰 발급을 위한 요청 본문 데이터 객체
      * @return 액세스 토큰 발급 결과를 포함한 응답
      */
     @PostMapping
-    public Mono<ResponseEntity<Map<String, Object>>> generateToken(@RequestBody TokenRequest tokenRequest) {
+    public Mono<ResponseEntity<Map<String, Object>>> generateToken(@RequestBody TokenRequest request, @RequestHeader HttpHeaders headers) {
         // TokenService의 메서드를 호출하여 액세스 토큰을 발급하고 결과를 반환
-        return tokenService.getAccessToken(tokenRequest);
+        return tokenService.getAccessToken(request, headers);
     }
 
     /**
@@ -48,8 +49,8 @@ public class TokenController {
      * @return 토큰 취소 결과를 포함한 응답
      */
     @PostMapping("/revoke")
-    public Mono<ResponseEntity<Map<String, Object>>> revokeToken(@RequestBody RevokeTokenRequest request) {
+    public Mono<ResponseEntity<Map<String, Object>>> revokeToken(@RequestBody RevokeTokenRequest request, @RequestHeader HttpHeaders headers) {
         // TokenService의 메서드를 호출하여 액세스 토큰을 취소하고 결과를 반환
-        return tokenService.revokeToken(request);
+        return tokenService.revokeToken(request, headers);
     }
 }
