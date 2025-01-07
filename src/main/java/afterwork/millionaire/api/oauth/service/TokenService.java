@@ -3,74 +3,52 @@ package afterwork.millionaire.api.oauth.service;
 import afterwork.millionaire.api.oauth.dto.TokenRequest;
 import afterwork.millionaire.api.oauth.dto.RevokeTokenRequest;
 import afterwork.millionaire.config.ApiProperties;
+import afterwork.millionaire.util.WebClientUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
-import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.http.ResponseEntity;
 import reactor.core.publisher.Mono;
 
 import java.util.Map;
 
 /**
- * TokenServices
+ * TokenService
  * OAuth2 토큰을 발급받기 위한 서비스입니다.
- * 주어진 요청 정보로 액세스 토큰을 발급받아 반환합니다.
+ * 주어진 요청 정보로 액세스 토큰을 발급받아 반환하며, 토큰 취소 기능도 제공합니다.
  */
 @Service
 @Slf4j
 public class TokenService {
 
-    private final WebClient webClient;
-    private final ApiProperties apiProperties;
-
-    // 생성자: WebClient와 ApiProperties를 의존성 주입
+    // 외부 API 설정을 위한 ApiProperties 의존성 주입
     @Autowired
-    public TokenService(WebClient.Builder webClientBuilder, ApiProperties apiProperties) {
-        this.webClient = webClientBuilder.baseUrl(apiProperties.getBaseUrl()).build();
-        this.apiProperties = apiProperties;
-    }
+    private ApiProperties apiProperties;
 
     /**
      * 액세스 토큰을 비동기적으로 발급받습니다.
+     * 주어진 요청 정보와 헤더를 사용하여 액세스 토큰을 발급하고, 결과를 반환합니다.
      *
-     * @param tokenRequest 토큰 발급을 위한 요청 정보
+     * @param request 액세스 토큰 발급을 위한 요청 정보
+     * @param headers 요청 헤더에 포함된 인증 정보
      * @return 액세스 토큰 또는 에러 응답
      */
-    public Mono<ResponseEntity<Map<String, Object>>> getAccessToken(TokenRequest tokenRequest) {
-        // 액세스 토큰 발급 요청
-        return webClient.post()
-                .uri(apiProperties.getToken())  // 토큰 발급 URI
-                .header("Content-Type", "application/json; charset=UTF-8")  // 요청 헤더 설정
-                .bodyValue(tokenRequest)  // 요청 본문 설정
-                .retrieve()
-                .toEntity(new ParameterizedTypeReference<Map<String, Object>>() {})  // 응답을 Map으로 변환
-                .onErrorResume(e -> {
-                    // 에러 발생 시 처리
-                    log.error("외부 호출 에러: {}", e.getMessage(), e);
-                    return Mono.just(afterwork.millionaire.api.util.ErrorUtils.createErrorResponse("외부 호출 에러", e.getMessage()));
-                });
+    public Mono<ResponseEntity<Map<String, Object>>> getAccessToken(TokenRequest request, HttpHeaders headers) {
+        // WebClient를 사용하여 외부 API로 액세스 토큰 발급 요청을 보내고, 그 결과를 Mono 형태로 반환
+        return WebClientUtils.sendPostRequest(apiProperties.getToken(), headers, request);
     }
 
     /**
-     * 토큰을 비동기적으로 취소합니다.
+     * 액세스 토큰을 비동기적으로 취소합니다.
+     * 주어진 요청 정보를 바탕으로 토큰을 취소하고 결과를 반환합니다.
      *
-     * @param request 토큰 취소 요청 정보
-     * @return 응답
+     * @param request 토큰 취소를 위한 요청 정보
+     * @param headers 요청 헤더에 포함된 인증 정보
+     * @return 토큰 취소 결과 또는 에러 응답
      */
-    public Mono<ResponseEntity<Map<String, Object>>> revokeToken(RevokeTokenRequest request) {
-        // 토큰 취소 요청
-        return webClient.post()
-                .uri(apiProperties.getRevoke())  // 토큰 취소 URI
-                .header("Content-Type", "application/json; charset=UTF-8")  // 요청 헤더 설정
-                .bodyValue(request)  // 요청 본문 설정
-                .retrieve()
-                .toEntity(new ParameterizedTypeReference<Map<String, Object>>() {})  // 응답을 Map으로 변환
-                .onErrorResume(e -> {
-                    // 에러 발생 시 처리
-                    log.error("외부 호출 에러: {}", e.getMessage(), e);
-                    return Mono.just(afterwork.millionaire.api.util.ErrorUtils.createErrorResponse("외부 호출 에러", e.getMessage()));
-                });
+    public Mono<ResponseEntity<Map<String, Object>>> revokeToken(RevokeTokenRequest request, HttpHeaders headers) {
+        // WebClient를 사용하여 외부 API로 토큰 취소 요청을 보내고, 그 결과를 Mono 형태로 반환
+        return WebClientUtils.sendPostRequest(apiProperties.getRevoke(), headers, request);
     }
 }
