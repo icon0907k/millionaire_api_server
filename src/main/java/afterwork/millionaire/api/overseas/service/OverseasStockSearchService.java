@@ -1,6 +1,5 @@
 package afterwork.millionaire.api.overseas.service;
 
-import afterwork.millionaire.api.overseas.dto.OverseasStockPriceRequest;
 import afterwork.millionaire.api.overseas.dto.OverseasStockSearchRequest;
 import afterwork.millionaire.config.ApiProperties;
 import afterwork.millionaire.util.WebClientUtils;
@@ -21,6 +20,6 @@ public class OverseasStockSearchService {
 
 
     public Mono<ResponseEntity<Map<String, Object>>> getOverseasStockSearchData(OverseasStockSearchRequest request, HttpHeaders headers) {
-        return WebClientUtils.sendGetRequest(apiProperties.getOverseasPrice(), headers, request);
+        return WebClientUtils.sendGetRequest(apiProperties.getOverseasInquireSearch(), headers, request);
     }
 }

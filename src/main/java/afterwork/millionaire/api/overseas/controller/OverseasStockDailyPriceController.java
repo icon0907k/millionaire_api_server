@@ -1,9 +1,7 @@
 package afterwork.millionaire.api.overseas.controller;
 
 import afterwork.millionaire.api.overseas.dto.OverseasStockDailyPriceRequest;
-import afterwork.millionaire.api.overseas.dto.OverseasStockPriceRequest;
 import afterwork.millionaire.api.overseas.service.OverseasStockDailyPriceService;
-import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;

@@ -1,5 +1,6 @@
 package afterwork.millionaire.util;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,7 +37,7 @@ public class ErrorUtils {
 
             // errorDetails의 값이 JSON 형식이므로 이를 파싱하여 Map으로 변환
             String detailsJson = extractJsonFromErrorDetails(errorMessage);  // JSON 부분 추출
-            Map<String, String> parsedDetails = objectMapper.readValue(detailsJson, Map.class);  // JSON 파싱
+            Map<String, Object> parsedDetails = objectMapper.readValue(detailsJson, new TypeReference<>() {});
 
             errorResponse.put("errorDetails", parsedDetails);  // 파싱된 세부 정보 추가
 
