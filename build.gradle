@@ -28,12 +28,12 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 
 	// Hibernate Validator (jakarta.validation)
-	implementation 'org.hibernate.validator:hibernate-validator:7.0.1.Final'
-	implementation 'jakarta.validation:jakarta.validation-api:2.0.2'
+	implementation 'org.hibernate.validator:hibernate-validator'
+	implementation 'jakarta.validation:jakarta.validation-api'
 
 	// Lombok
-	compileOnly 'org.projectlombok:lombok:1.18.26'
-	annotationProcessor 'org.projectlombok:lombok:1.18.26'
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
 
 	// 테스트 의존성
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'

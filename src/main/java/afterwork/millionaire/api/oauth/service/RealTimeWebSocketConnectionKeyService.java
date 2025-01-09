@@ -18,7 +18,6 @@ import java.util.Map;
 @Service
 public class RealTimeWebSocketConnectionKeyService {
 
-    // 외부 API 설정을 위한 ApiProperties 의존성 주입
     @Autowired
     private ApiProperties apiProperties;
 

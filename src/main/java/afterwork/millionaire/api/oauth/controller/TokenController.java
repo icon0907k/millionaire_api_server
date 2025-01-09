@@ -20,13 +20,8 @@ import java.util.Map;
 @RequestMapping("/oauth/token")
 public class TokenController {
 
-    private final TokenService tokenService;
-
-    // TokenService 의존성 주입
     @Autowired
-    public TokenController(TokenService tokenService) {
-        this.tokenService = tokenService;
-    }
+    private TokenService tokenService;
 
     /**
      * 액세스 토큰을 발급받는 엔드포인트입니다.

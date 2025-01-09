@@ -1,7 +1,7 @@
-package afterwork.millionaire.api.overseas.controller;
+package afterwork.millionaire.api.overseas.baseprice.controller;
 
-import afterwork.millionaire.api.overseas.dto.OverseasStockSearchRequest;
-import afterwork.millionaire.api.overseas.service.OverseasStockSearchService;
+import afterwork.millionaire.api.overseas.baseprice.dto.OverseasStockSearchRequest;
+import afterwork.millionaire.api.overseas.baseprice.service.OverseasStockSearchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
@@ -10,17 +10,50 @@ import reactor.core.publisher.Mono;
 
 import java.util.Map;
 
+/**
+ * OverseasStockSearchController
+ * 이 컨트롤러는 해외 주식 검색을 위한 API 엔드포인트를 제공합니다.
+ * 주식 검색에 필요한 다양한 파라미터를 기반으로 검색 데이터를 반환합니다.
+ */
 @RestController
 @RequestMapping("/overseas/overseas-stock/search")
 public class OverseasStockSearchController {
 
-    private final OverseasStockSearchService overseasStockSearchService;
-
     @Autowired
-    public OverseasStockSearchController(OverseasStockSearchService overseasStockSearchService) {
-        this.overseasStockSearchService = overseasStockSearchService;
-    }
+    private OverseasStockSearchService overseasStockSearchService;
 
+    /**
+     * 해외 주식 검색을 위한 엔드포인트
+     *
+     * @param AUTH                  인증 정보
+     * @param EXCD                  거래소 코드
+     * @param CO_YN_PRICECUR        가격 커런시 사용 여부
+     * @param CO_ST_PRICECUR        가격 커런시 시작 값
+     * @param CO_EN_PRICECUR        가격 커런시 종료 값
+     * @param CO_YN_RATE            환율 사용 여부
+     * @param CO_ST_RATE            환율 시작 값
+     * @param CO_EN_RATE            환율 종료 값
+     * @param CO_YN_VALX            가치 사용 여부
+     * @param CO_ST_VALX            가치 시작 값
+     * @param CO_EN_VALX            가치 종료 값
+     * @param CO_YN_SHAR            주식 수 사용 여부
+     * @param CO_ST_SHAR            주식 수 시작 값
+     * @param CO_EN_SHAR            주식 수 종료 값
+     * @param CO_YN_VOLUME          거래량 사용 여부
+     * @param CO_ST_VOLUME          거래량 시작 값
+     * @param CO_EN_VOLUME          거래량 종료 값
+     * @param CO_YN_AMT             금액 사용 여부
+     * @param CO_ST_AMT             금액 시작 값
+     * @param CO_EN_AMT             금액 종료 값
+     * @param CO_YN_EPS             주당순이익 사용 여부
+     * @param CO_ST_EPS             주당순이익 시작 값
+     * @param CO_EN_EPS             주당순이익 종료 값
+     * @param CO_YN_PER             PER 사용 여부
+     * @param CO_ST_PER             PER 시작 값
+     * @param CO_EN_PER             PER 종료 값
+     * @param headers               요청 헤더 (인증 정보 등)
+     * @return 해외 주식 검색 데이터를 포함한 응답
+     */
     @GetMapping
     public Mono<ResponseEntity<Map<String, Object>>> getOverseasStockSearch(
             @RequestParam String AUTH,
@@ -51,6 +84,7 @@ public class OverseasStockSearchController {
             @RequestParam String CO_EN_PER,
             @RequestHeader HttpHeaders headers
     ) {
+        // 요청 파라미터를 기반으로 DTO 객체 생성
         OverseasStockSearchRequest request = new OverseasStockSearchRequest();
         request.setAUTH(AUTH);
         request.setEXCD(EXCD);
@@ -79,6 +113,7 @@ public class OverseasStockSearchController {
         request.setCO_ST_PER(CO_ST_PER);
         request.setCO_EN_PER(CO_EN_PER);
 
-        return overseasStockSearchService.getOverseasStockSearchData(request,headers);
+        // 서비스 호출하여 해외 주식 검색 데이터 조회
+        return overseasStockSearchService.getOverseasStockSearchData(request, headers);
     }
 }

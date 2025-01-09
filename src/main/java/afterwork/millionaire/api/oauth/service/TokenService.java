@@ -22,7 +22,6 @@ import java.util.Map;
 @Slf4j
 public class TokenService {
 
-    // 외부 API 설정을 위한 ApiProperties 의존성 주입
     @Autowired
     private ApiProperties apiProperties;
 

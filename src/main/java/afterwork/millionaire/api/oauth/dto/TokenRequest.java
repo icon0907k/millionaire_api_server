@@ -10,11 +10,7 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class TokenRequest {
-
     private String grant_type;  // 인증 유형
     private String appkey;      // 앱 키
     private String appsecret;   // 앱 시크릿 키
-    //테스트용
-    public TokenRequest() {
-    }
 }

@@ -5,7 +5,11 @@ import java.time.format.DateTimeFormatter;
 
 public class DateUtil {
 
-    // 날짜를 "yyMMdd" 형식으로 반환하는 메소드 (주말 제외한 전일)
+    /**
+     * 날짜를 "yyyyMMdd" 형식으로 반환하는 메소드 (주말 제외한 전일)
+     * @param isYesterday 전일을 구할지 여부 (true: 전일, false: 오늘)
+     * @return 날짜를 "yyyyMMdd" 형식으로 반환
+     */
     public static String getFormattedDate(boolean isYesterday) {
         // 한국 시간대 (Asia/Seoul)
         ZoneId koreaZoneId = ZoneId.of("Asia/Seoul");
@@ -27,7 +31,7 @@ public class DateUtil {
             }
         }
 
-        // 날짜 형식 정의 (yyMMdd)
+        // 날짜 형식 정의 (yyyyMMdd)
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
 
         // 형식에 맞게 날짜 변환

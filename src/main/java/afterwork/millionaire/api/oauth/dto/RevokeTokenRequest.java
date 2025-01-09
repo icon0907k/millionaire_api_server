@@ -14,7 +14,4 @@ public class RevokeTokenRequest {
     private String appkey;    // 앱 키
     private String appsecret; // 앱 시크릿
     private String token;     // 취소할 토큰
-    //테스트용
-    public RevokeTokenRequest() {
-    }
 }

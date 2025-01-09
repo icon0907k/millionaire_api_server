@@ -23,7 +23,5 @@ public class HashkeyRequest {
     private String CTAC_TLNO;         // 연락처
     private String FUOP_ITEM_DVSN_CD; // (비어 있을 수 있음)
     private String ORD_DVSN_CD;       // 주문 구분 코드 (신규, 수정 등)
-    //테스트용
-    public HashkeyRequest() {
-    }
+
 }

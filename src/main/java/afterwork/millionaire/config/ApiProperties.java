@@ -17,15 +17,29 @@ import org.springframework.context.annotation.Configuration;
 @Setter
 public class ApiProperties {
 
-    private String baseUrl;  // API 기본 URL
-    private String token;    // 토큰 발급 URI
-    private String revoke;    // 토큰 취소 URI
-    private String hashkey;    // 해시 키 요청 URI
-    private String approval;    // 승인 관련 URI
+    // API 기본 URL
+    private String baseUrl;
+    // 토큰 발급 URI
+    private String token;
+    // 토큰 취소 URI
+    private String revoke;
+    // 해시 키 요청 URI
+    private String hashkey;
+    // 승인 관련 URI
+    private String approval;
+
+    // 해외 주식 관련 URI들
     private String overseasPrice; // 해외주식 현재체결가 URI
     private String overseasDailyPrice; // 해외주식 기간별시세 URI
     private String overseasInquireDailyChartprice; // 해외주식 종목/지수/환율기간별시세 URI
     private String overseasInquireSearch; // 해외주식 조건검색 URI
     private String overseasInquireTimeItemchartprice; // 해외주식 분봉조회 URI
+    private String overseasTradingInquirePsamount; // 해외주식 매수가능금액조회 URI
+    private String overseasTradingOrder; // 해외주식 주문 URI
 
+    // 국내 주식 관련 URI들
+    private String domesticPrice; // 국내주식 현재체결가 URI
+    private String domesticInquireTimeItemchartprice; // 국내주식 분봉조회 URI
+    private String domesticTradingInquirePsamount; // 국내주식 매수가능금액조회 URI
+    private String domesticTradingOrder; // 국내주식 주문 URI
 }

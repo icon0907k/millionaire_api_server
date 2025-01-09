@@ -1,6 +1,6 @@
-package afterwork.millionaire.api.overseas.service;
+package afterwork.millionaire.api.overseas.baseprice.service;
 
-import afterwork.millionaire.api.overseas.dto.OverseasStockMinuteDataRequest;
+import afterwork.millionaire.api.overseas.baseprice.dto.OverseasStockMinuteDataRequest;
 import afterwork.millionaire.config.ApiProperties;
 import afterwork.millionaire.util.DateUtil;
 import afterwork.millionaire.util.WebClientUtils;
@@ -14,24 +14,50 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * OverseasStockMinuteDataService
+ * 해외 주식 분봉 데이터를 처리하는 서비스 클래스입니다.
+ * 주식 분봉 데이터 요청과 두 시간 간의 open 값 비교를 처리합니다.
+ */
 @Service
 public class OverseasStockMinuteDataService {
 
+    // API 설정을 담고 있는 ApiProperties 의존성 주입
     @Autowired
     private ApiProperties apiProperties;
 
-    // 해외 주식 분봉 데이터 요청
+    /**
+     * 해외 주식 분봉 데이터를 요청하는 메소드입니다.
+     * @param request 요청에 필요한 파라미터를 포함하는 DTO
+     * @param headers HTTP 요청 헤더
+     * @return API 응답 결과를 포함하는 Mono 객체
+     */
     public Mono<ResponseEntity<Map<String, Object>>> getOverseasStockMinuteData(OverseasStockMinuteDataRequest request, HttpHeaders headers) {
+        // 외부 API에 GET 요청을 보내고 응답을 Mono 형태로 반환
         return WebClientUtils.sendGetRequest(apiProperties.getOverseasInquireTimeItemchartprice(), headers, request);
     }
 
-    // 해외 주식 시간 범위 쿼리 요청
-    public Mono<ResponseEntity<Map<String, Object>>> getOverseasStockTimeRangeQuery(OverseasStockMinuteDataRequest request, HttpHeaders headers,String targetTime1,String targetTime2) {
-        return compareOpenValues(WebClientUtils.sendGetRequest(apiProperties.getOverseasInquireTimeItemchartprice(), headers, request),targetTime1,targetTime2);
+    /**
+     * 해외 주식 시간 범위 쿼리 요청을 보내고 두 시간의 open 값을 비교하는 메소드입니다.
+     * @param request 요청에 필요한 파라미터를 포함하는 DTO
+     * @param headers HTTP 요청 헤더
+     * @param targetTime1 첫 번째 시간 (HHMMSS 형식)
+     * @param targetTime2 두 번째 시간 (HHMMSS 형식)
+     * @return 두 시간 간의 open 값 차이를 계산한 결과를 포함하는 Mono 객체
+     */
+    public Mono<ResponseEntity<Map<String, Object>>> getOverseasStockTimeRangeQuery(OverseasStockMinuteDataRequest request, HttpHeaders headers, String targetTime1, String targetTime2) {
+        // 주식 분봉 데이터를 가져오고, 두 시간의 open 값을 비교하는 메소드 호출
+        return compareOpenValues(WebClientUtils.sendGetRequest(apiProperties.getOverseasInquireTimeItemchartprice(), headers, request), targetTime1, targetTime2);
     }
 
-    // 두 날짜, 시간에 대한 open 값을 비교하여 결과를 반환
-    public Mono<ResponseEntity<Map<String, Object>>> compareOpenValues(Mono<ResponseEntity<Map<String, Object>>> responseMono,String targetTime1, String targetTime2) {
+    /**
+     * 두 시간의 open 값을 비교하여 결과를 반환하는 메소드입니다.
+     * @param responseMono API 응답을 포함하는 Mono 객체
+     * @param targetTime1 첫 번째 시간 (HHMMSS 형식)
+     * @param targetTime2 두 번째 시간 (HHMMSS 형식)
+     * @return 두 시간 간의 open 값 차이를 계산한 결과를 포함하는 Mono 객체
+     */
+    public Mono<ResponseEntity<Map<String, Object>>> compareOpenValues(Mono<ResponseEntity<Map<String, Object>>> responseMono, String targetTime1, String targetTime2) {
         return responseMono.map(responseEntity -> {
             Map<String, Object> responseMap = responseEntity.getBody();
             Map<String, Object> result = new HashMap<>();
