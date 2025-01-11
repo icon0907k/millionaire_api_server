@@ -29,7 +29,7 @@ public class DomesticStockBuyableAmountService {
      * @param headers   요청 헤더 (인증 관련 정보 포함)
      * @return          거래 가능한 금액을 포함한 응답 데이터
      */
-    public Mono<ResponseEntity<Map<String, Object>>> getOverseasStockBuyableAmount(DomesticStockBuyableAmountRequest request, HttpHeaders headers) {
+    public Mono<ResponseEntity<Map<String, Object>>> getDomesticStockBuyableAmount(DomesticStockBuyableAmountRequest request, HttpHeaders headers) {
         return WebClientUtils.sendGetRequest(apiProperties.getDomesticTradingInquirePsamount(), headers, request);
     }
 }

@@ -51,6 +51,6 @@ public class DomesticStockBuyableAmountController {
         );
 
         // 서비스 호출을 통해 매수 가능 금액 데이터 조회
-        return domesticStockBuyableAmountService.getOverseasStockBuyableAmount(request, headers);
+        return domesticStockBuyableAmountService.getDomesticStockBuyableAmount(request, headers);
     }
 }
