@@ -20,7 +20,7 @@ import java.util.Map;
 public class OverseasStockDailyChartPriceService {
 
     @Autowired
-    private ApiProperties apiProperties;  // API 설정을 가져오기 위한 속성 클래스
+    private ApiProperties apiProperties;
 
     /**
      * 해외 주식 일별 차트 가격 데이터를 요청하는 메소드입니다.

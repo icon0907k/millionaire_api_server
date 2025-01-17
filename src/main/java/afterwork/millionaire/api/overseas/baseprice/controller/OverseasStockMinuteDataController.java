@@ -24,73 +24,37 @@ public class OverseasStockMinuteDataController {
 
     /**
      * 해외 주식 분 단위 데이터를 조회하는 엔드포인트
-     *
-     * @param AUTH    인증 정보
-     * @param EXCD    거래소 코드
-     * @param SYMB    주식 종목 코드
-     * @param NMIN    조회 시작 분
-     * @param PINC    증가 값
-     * @param NEXT    다음 데이터 여부
-     * @param NREC    조회 개수
-     * @param FILL    채우기 옵션
-     * @param KEYB    키 값
-     * @param headers 요청 헤더 (인증 정보 등)
-     * @return 해외 주식 분 단위 데이터를 포함한 응답
+     * 이 메서드는 GET 요청을 통해 해외 주식의 분 단위 데이터를 조회하는 기능을 제공합니다.
+     * @param request 요청 객체로, 해외 주식의 분 단위 데이터를 조회하는 데 필요한 매개변수들을 포함합니다.
+     * @param headers 요청 헤더로, 인증 정보와 같은 중요한 메타 데이터를 포함합니다.
+     * @return 해외 주식 분 단위 데이터를 포함한 응답을 반환합니다.
      */
     @GetMapping
     public Mono<ResponseEntity<Map<String, Object>>> getOverseasStockMinuteData(
-            @RequestParam String AUTH,
-            @RequestParam String EXCD,
-            @RequestParam String SYMB,
-            @RequestParam String NMIN,
-            @RequestParam String PINC,
-            @RequestParam String NEXT,
-            @RequestParam String NREC,
-            @RequestParam String FILL,
-            @RequestParam String KEYB,
+            @ModelAttribute OverseasStockMinuteDataRequest request,
             @RequestHeader HttpHeaders headers
     ){
-        // 요청 파라미터를 기반으로 DTO 객체 생성
-        OverseasStockMinuteDataRequest request = new OverseasStockMinuteDataRequest(AUTH, EXCD, SYMB,
-                NMIN, PINC, NEXT, NREC, FILL, KEYB);
-        // 서비스 호출하여 해외 주식 분 단위 데이터 조회
+        // 서비스 계층에서 해외 주식 분 단위 데이터를 조회하고, 조회 결과를 반환
         return overseasStockMinuteDataService.getOverseasStockMinuteData(request, headers);
     }
 
     /**
      * 해외 주식 시간 범위에 따른 데이터를 조회하는 엔드포인트
-     *
-     * @param AUTH    인증 정보
-     * @param EXCD    거래소 코드
-     * @param SYMB    주식 종목 코드
-     * @param PINC    증가 값
-     * @param NEXT    다음 데이터 여부
-     * @param NREC    조회 개수
-     * @param FILL    채우기 옵션
-     * @param KEYB    키 값
-     * @param TIME1   시작 시간
-     * @param TIME2   종료 시간
+     * 이 메서드는 GET 요청을 통해 주어진 시간 범위에 따른 해외 주식 데이터를 조회합니다.
+     * @param TIME1   시작 시간 (시작 시점)
+     * @param TIME2   종료 시간 (끝 시점)
      * @param headers 요청 헤더 (인증 정보 등)
-     * @return 해외 주식 시간 범위 데이터를 포함한 응답
+     * @return 해외 주식 시간 범위 데이터를 포함한 응답을 반환합니다.
      */
     @GetMapping("/timerang-query")
     public Mono<ResponseEntity<Map<String, Object>>> OverseasStockTimeRangeQuery(
-            @RequestParam String AUTH,
-            @RequestParam String EXCD,
-            @RequestParam String SYMB,
-            @RequestParam String PINC,
-            @RequestParam String NEXT,
-            @RequestParam String NREC,
-            @RequestParam String FILL,
-            @RequestParam String KEYB,
-            @RequestParam String TIME1,
-            @RequestParam String TIME2,
-            @RequestHeader HttpHeaders headers
+            @ModelAttribute OverseasStockMinuteDataRequest request,
+            @RequestParam String TIME1, // 시작 시간
+            @RequestParam String TIME2, // 종료 시간
+            @RequestHeader HttpHeaders headers // 요청 헤더를 바인딩 (예: 인증 정보)
     ){
-        // 요청 파라미터를 기반으로 DTO 객체 생성
-        OverseasStockMinuteDataRequest request = new OverseasStockMinuteDataRequest(AUTH, EXCD, SYMB,
-                "10", PINC, NEXT, NREC, FILL, KEYB);
-        // 서비스 호출하여 시간 범위 데이터 조회
+        request.setNMIN("10"); // NMIN을 10으로 설정하여 주기적으로 조회
+        // 서비스 계층에서 주어진 시간 범위에 따른 해외 주식 데이터를 조회하고, 조회 결과를 반환
         return overseasStockMinuteDataService.getOverseasStockTimeRangeQuery(request, headers, TIME1, TIME2);
     }
 }

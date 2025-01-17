@@ -28,7 +28,6 @@ public class TokenService {
     /**
      * 액세스 토큰을 비동기적으로 발급받습니다.
      * 주어진 요청 정보와 헤더를 사용하여 액세스 토큰을 발급하고, 결과를 반환합니다.
-     *
      * @param request 액세스 토큰 발급을 위한 요청 정보
      * @param headers 요청 헤더에 포함된 인증 정보
      * @return 액세스 토큰 또는 에러 응답

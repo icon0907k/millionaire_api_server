@@ -24,7 +24,6 @@ public class RealTimeWebSocketConnectionKeyService {
     /**
      * 새로운 승인 키를 발급받습니다.
      * 주어진 요청 정보와 헤더를 바탕으로 승인 키를 발급하고, 그 결과를 반환합니다.
-     *
      * @param request 승인 키 발급 요청 정보
      * @param headers 요청 헤더에 포함된 콘텐츠 타입
      * @return 승인 키 발급 결과 또는 에러 응답

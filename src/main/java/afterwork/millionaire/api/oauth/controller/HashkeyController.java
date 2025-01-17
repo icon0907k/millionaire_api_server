@@ -29,17 +29,15 @@ public class HashkeyController {
      * 해시 키를 발급받는 엔드포인트입니다.
      * 클라이언트는 해시 키 요청 정보를 본문에 포함하여 요청합니다.
      * 요청에 포함된 정보에 기반하여 해시 키를 생성하고, 결과를 반환합니다.
-     *
      * @param request 해시 키 요청 정보를 포함한 객체
      * @param headers 요청 헤더에 포함된 앱 키, 시크릿 및 콘텐츠 타입 정보
      * @return 생성된 해시 키와 관련된 응답을 반환
      */
-    @PostMapping  // HTTP POST 요청을 처리하는 메서드
+    @PostMapping
     public Mono<ResponseEntity<Map<String, Object>>> getHashkey(
-            @RequestBody HashkeyRequest request,  // 요청 본문에서 해시 키 요청 정보를 받음
-            @RequestHeader HttpHeaders headers  // 요청 헤더에서 앱 키, 시크릿, 콘텐츠 타입을 받음
+            @RequestBody HashkeyRequest request,
+            @RequestHeader HttpHeaders headers
     ) {
-
         // HashkeyService의 메서드를 호출하여 해시 키를 생성하고, 생성된 해시 키를 클라이언트에게 반환
         return hashkeyService.getHashkey(request, headers);
     }

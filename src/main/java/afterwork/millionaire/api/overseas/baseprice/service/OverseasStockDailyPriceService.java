@@ -19,7 +19,6 @@ import java.util.Map;
 @Service
 public class OverseasStockDailyPriceService {
 
-    // API 설정을 담고 있는 ApiProperties 의존성 주입
     @Autowired
     private ApiProperties apiProperties;
 

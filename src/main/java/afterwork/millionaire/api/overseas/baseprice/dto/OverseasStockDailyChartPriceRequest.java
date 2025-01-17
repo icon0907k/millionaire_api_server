@@ -11,9 +11,9 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class OverseasStockDailyChartPriceRequest {
-    private String fid_cond_mrkt_div_code;  // 시장 구분 코드
-    private String fid_input_iscd;          // 주식 종목 코드
-    private String fid_input_date_1;        // 조회 시작 날짜
-    private String fid_input_date_2;        // 조회 종료 날짜
-    private String fid_period_div_code;     // 주기 구분 코드
+    private String FID_COND_MRKT_DIV_CODE;  // 시장 구분 코드
+    private String FID_INPUT_ISCD;          // 주식 종목 코드
+    private String FID_INPUT_DATE_1;        // 조회 시작 날짜
+    private String FID_INPUT_DATE_2;        // 조회 종료 날짜
+    private String FID_PERIOD_DIV_CODE;     // 주기 구분 코드
 }

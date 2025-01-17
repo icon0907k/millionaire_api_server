@@ -23,7 +23,6 @@ public class DomesticStockPriceService {
 
     /**
      * 국내 주식 가격 데이터를 요청하는 메서드입니다.
-     *
      * @param request 요청 데이터 (종목 코드 및 시장 구분 코드)
      * @param headers 요청 헤더 (인증 및 기타 정보 포함)
      * @return 주식 가격 데이터를 포함한 응답

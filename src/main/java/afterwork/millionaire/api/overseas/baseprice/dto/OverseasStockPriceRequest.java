@@ -2,6 +2,7 @@ package afterwork.millionaire.api.overseas.baseprice.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * OverseasStockPriceRequest

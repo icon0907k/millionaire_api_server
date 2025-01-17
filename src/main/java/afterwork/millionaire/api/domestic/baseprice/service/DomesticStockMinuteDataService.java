@@ -26,7 +26,6 @@ public class DomesticStockMinuteDataService {
 
     /**
      * 두 시점의 open 값을 비교하여 결과를 반환하는 메서드입니다.
-     *
      * @param responseMono1 첫 번째 시간에 대한 응답 데이터
      * @param responseMono2 두 번째 시간에 대한 응답 데이터
      * @param targetTime1   첫 번째 대상 시간
@@ -80,7 +79,6 @@ public class DomesticStockMinuteDataService {
 
     /**
      * 주어진 응답 데이터에서 특정 시간에 해당하는 open 값을 추출합니다.
-     *
      * @param responseMap 응답 데이터 맵
      * @param targetTime  대상 시간
      * @return 추출된 open 값 또는 null
@@ -107,7 +105,6 @@ public class DomesticStockMinuteDataService {
 
     /**
      * 국내 주식 분봉 데이터를 요청합니다.
-     *
      * @param request 요청 DTO
      * @param headers 요청 헤더
      * @return 주식 분봉 데이터 응답
@@ -118,7 +115,6 @@ public class DomesticStockMinuteDataService {
 
     /**
      * 두 시점 간의 분봉 데이터를 비교하는 요청을 처리합니다.
-     *
      * @param request1 첫 번째 시점의 요청 데이터
      * @param request2 두 번째 시점의 요청 데이터
      * @param headers  요청 헤더

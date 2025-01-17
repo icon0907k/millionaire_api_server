@@ -24,7 +24,6 @@ public class DomesticStockBuyableAmountService {
 
     /**
      * 해외 주식 거래 가능한 금액을 조회하는 메서드입니다.
-     *
      * @param request   요청 데이터 (CANO, ACNT_PRDT_CD 등)
      * @param headers   요청 헤더 (인증 관련 정보 포함)
      * @return          거래 가능한 금액을 포함한 응답 데이터

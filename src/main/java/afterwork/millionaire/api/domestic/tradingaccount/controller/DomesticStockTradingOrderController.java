@@ -23,15 +23,14 @@ public class DomesticStockTradingOrderController {
 
     /**
      * 국내 주식 거래 주문을 처리하는 엔드포인트입니다.
-     *
      * @param request 거래 주문 정보를 포함한 요청 본문
      * @param headers 요청 헤더 (앱 키, 시크릿, 콘텐츠 타입 등)
      * @return 거래 주문 결과를 포함한 응답
      */
     @PostMapping
     public Mono<ResponseEntity<Map<String, Object>>> domesticStockTradingOrder(
-            @RequestBody DomesticStockTradingOrderRequest request,  // 요청 본문에서 거래 주문 정보를 받음
-            @RequestHeader HttpHeaders headers  // 요청 헤더에서 인증 관련 정보를 받음
+            @RequestBody DomesticStockTradingOrderRequest request,
+            @RequestHeader HttpHeaders headers
     ) {
         // 서비스 호출을 통해 거래 주문 처리
         return domesticStockTradingOrderService.domesticStockTradingOrder(request, headers);

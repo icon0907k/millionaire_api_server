@@ -24,7 +24,6 @@ public class HashkeyService {
     /**
      * 외부 API를 호출하여 해시 키를 요청합니다.
      * WebClient를 사용하여 요청을 보내고, 그 응답을 반환합니다.
-     *
      * @param request 해시 키 요청에 필요한 정보 객체
      * @param headers API 호출에 필요한 인증 헤더 정보
      * @return 해시 키 발급 결과를 포함한 응답 또는 에러 응답
