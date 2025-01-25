@@ -4,6 +4,7 @@ import afterwork.millionaire.api.oauth.dto.TokenRequest;
 import afterwork.millionaire.api.oauth.dto.RevokeTokenRequest;
 import afterwork.millionaire.config.ApiProperties;
 import afterwork.millionaire.util.WebClientUtils;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -20,10 +21,10 @@ import java.util.Map;
  */
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class TokenService {
 
-    @Autowired
-    private ApiProperties apiProperties;
+    private final ApiProperties apiProperties;
 
     /**
      * 액세스 토큰을 비동기적으로 발급받습니다.

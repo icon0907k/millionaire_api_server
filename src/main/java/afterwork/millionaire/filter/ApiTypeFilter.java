@@ -44,10 +44,10 @@ public class ApiTypeFilter extends OncePerRequestFilter {
 
         // API_TYPE 값이 "real"일 경우 실제 API URL을 설정
         if ("real".equalsIgnoreCase(apiType)) {
-            apiProperties.setBaseUrl("https://openapivts.koreainvestment.com:29443/");
+            apiProperties.setBaseUrl("https://openapi.koreainvestment.com:9443");
         } else  {
             // API_TYPE 값이 "real"이 아닌 경우, mock API URL을 설정
-            apiProperties.setBaseUrl("https://openapivts.koreainvestment.com:29443/");
+            apiProperties.setBaseUrl("https://openapivts.koreainvestment.com:29443");
         }
 
         // 필터 체인을 통해 요청을 다음 필터나 컨트롤러로 전달

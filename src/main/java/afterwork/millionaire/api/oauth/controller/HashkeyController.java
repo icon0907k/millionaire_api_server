@@ -2,6 +2,7 @@ package afterwork.millionaire.api.oauth.controller;
 
 import afterwork.millionaire.api.oauth.dto.HashkeyRequest;
 import afterwork.millionaire.api.oauth.service.HashkeyService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -20,10 +21,10 @@ import java.util.Map;
 @Slf4j
 @RestController
 @RequestMapping("/oauth/hashkey")
+@RequiredArgsConstructor
 public class HashkeyController {
 
-    @Autowired
-    private HashkeyService hashkeyService;
+    private final HashkeyService hashkeyService;
 
     /**
      * 해시 키를 발급받는 엔드포인트입니다.

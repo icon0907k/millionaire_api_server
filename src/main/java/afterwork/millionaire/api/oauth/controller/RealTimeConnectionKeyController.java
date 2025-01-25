@@ -2,6 +2,7 @@ package afterwork.millionaire.api.oauth.controller;
 
 import afterwork.millionaire.api.oauth.dto.RealTimeConnectionKeyRequest;
 import afterwork.millionaire.api.oauth.service.RealTimeWebSocketConnectionKeyService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
@@ -17,14 +18,12 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/oauth/realTimeConnectionKey")
+@RequiredArgsConstructor
 public class RealTimeConnectionKeyController {
 
+    @Autowired
     private final RealTimeWebSocketConnectionKeyService connectionKeyService;
 
-    @Autowired
-    public RealTimeConnectionKeyController(RealTimeWebSocketConnectionKeyService connectionKeyService) {
-        this.connectionKeyService = connectionKeyService;
-    }
 
     /**
      * 사용자별로 실시간 접속키를 발급하는 엔드포인트입니다.

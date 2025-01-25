@@ -3,6 +3,7 @@ package afterwork.millionaire.api.oauth.controller;
 import afterwork.millionaire.api.oauth.dto.RevokeTokenRequest;
 import afterwork.millionaire.api.oauth.dto.TokenRequest;
 import afterwork.millionaire.api.oauth.service.TokenService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
@@ -18,10 +19,10 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/oauth/token")
+@RequiredArgsConstructor
 public class TokenController {
 
-    @Autowired
-    private TokenService tokenService;
+    private final TokenService tokenService;
 
     /**
      * 액세스 토큰을 발급받는 엔드포인트입니다.

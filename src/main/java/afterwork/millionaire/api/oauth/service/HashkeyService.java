@@ -3,6 +3,7 @@ package afterwork.millionaire.api.oauth.service;
 import afterwork.millionaire.api.oauth.dto.HashkeyRequest;
 import afterwork.millionaire.config.ApiProperties;
 import afterwork.millionaire.util.WebClientUtils;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
@@ -16,10 +17,10 @@ import java.util.Map;
  * 이 서비스는 해시 키를 외부 API에서 요청하고 결과를 반환하는 역할을 합니다.
  */
 @Service
+@RequiredArgsConstructor
 public class HashkeyService {
 
-    @Autowired
-    private ApiProperties apiProperties;
+    private final ApiProperties apiProperties;
 
     /**
      * 외부 API를 호출하여 해시 키를 요청합니다.

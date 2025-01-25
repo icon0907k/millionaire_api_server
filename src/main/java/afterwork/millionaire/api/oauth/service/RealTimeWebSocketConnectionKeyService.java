@@ -3,6 +3,7 @@ package afterwork.millionaire.api.oauth.service;
 import afterwork.millionaire.api.oauth.dto.RealTimeConnectionKeyRequest;
 import afterwork.millionaire.config.ApiProperties;
 import afterwork.millionaire.util.WebClientUtils;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
@@ -16,10 +17,10 @@ import java.util.Map;
  * 이 서비스는 실시간 웹소켓 접속을 위한 승인 키를 발급하는 역할을 합니다.
  */
 @Service
+@RequiredArgsConstructor
 public class RealTimeWebSocketConnectionKeyService {
 
-    @Autowired
-    private ApiProperties apiProperties;
+    private final ApiProperties apiProperties;
 
     /**
      * 새로운 승인 키를 발급받습니다.
