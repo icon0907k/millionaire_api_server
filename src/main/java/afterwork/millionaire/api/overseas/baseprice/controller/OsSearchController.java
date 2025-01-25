@@ -2,7 +2,7 @@ package afterwork.millionaire.api.overseas.baseprice.controller;
 
 import afterwork.millionaire.api.overseas.baseprice.dto.OsSearchRequest;
 import afterwork.millionaire.api.overseas.baseprice.service.OsSearchService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,10 +17,10 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/overseas/overseas-stock/search")
+@RequiredArgsConstructor
 public class OsSearchController {
 
-    @Autowired
-    private OsSearchService osSearchService;
+    private final OsSearchService osSearchService;
 
     /**
      * 해외 주식 검색을 위한 엔드포인트

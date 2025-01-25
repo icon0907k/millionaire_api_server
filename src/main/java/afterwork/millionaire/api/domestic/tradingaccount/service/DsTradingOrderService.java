@@ -19,7 +19,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class DsTradingOrderService {
 
-    private ApiProperties apiProperties;
+    private final ApiProperties apiProperties;
 
     /**
      * 국내 주식 거래 주문을 처리하는 메서드입니다.

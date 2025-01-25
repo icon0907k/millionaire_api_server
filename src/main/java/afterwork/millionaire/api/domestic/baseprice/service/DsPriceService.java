@@ -19,7 +19,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class DsPriceService {
 
-    private ApiProperties apiProperties;
+    private final ApiProperties apiProperties;
 
     /**
      * 국내 주식 가격 데이터를 요청하는 메서드입니다.

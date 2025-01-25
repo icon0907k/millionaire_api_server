@@ -1,7 +1,7 @@
 package afterwork.millionaire.api.overseas.baseprice.controller;
 
-import afterwork.millionaire.api.overseas.baseprice.service.PriceService;
-import afterwork.millionaire.api.overseas.baseprice.dto.PriceRequest;
+import afterwork.millionaire.api.overseas.baseprice.dto.OsPriceRequest;
+import afterwork.millionaire.api.overseas.baseprice.service.OsPriceService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;

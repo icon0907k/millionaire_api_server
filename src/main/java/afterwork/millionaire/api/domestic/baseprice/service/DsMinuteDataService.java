@@ -3,6 +3,7 @@ package afterwork.millionaire.api.domestic.baseprice.service;
 import afterwork.millionaire.api.domestic.baseprice.dto.DsMinuteDataRequest;
 import afterwork.millionaire.config.ApiProperties;
 import afterwork.millionaire.util.WebClientUtils;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
@@ -19,10 +20,10 @@ import java.util.Map;
  * 데이터 요청 및 두 시점 간의 비교 기능을 제공합니다.
  */
 @Service
+@RequiredArgsConstructor
 public class DsMinuteDataService {
 
-    @Autowired
-    private ApiProperties apiProperties;
+    private final ApiProperties apiProperties;
 
     /**
      * 두 시점의 open 값을 비교하여 결과를 반환하는 메서드입니다.

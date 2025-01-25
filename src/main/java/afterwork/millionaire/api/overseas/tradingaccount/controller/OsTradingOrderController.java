@@ -21,7 +21,6 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class OsTradingOrderController {
 
-    @Autowired
     private final OsTradingOrderService osTradingOrderService;
 
     /**

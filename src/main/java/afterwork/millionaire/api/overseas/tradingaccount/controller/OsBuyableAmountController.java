@@ -2,7 +2,7 @@ package afterwork.millionaire.api.overseas.tradingaccount.controller;
 
 import afterwork.millionaire.api.overseas.tradingaccount.dto.OsBuyableAmountRequest;
 import afterwork.millionaire.api.overseas.tradingaccount.service.OsBuyableAmountService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,10 +17,10 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/overseas/overseas-stock/trading/inquire-psamount")
+@RequiredArgsConstructor
 public class OsBuyableAmountController {
 
-    @Autowired
-    private OsBuyableAmountService osBuyableAmountService;
+    private final OsBuyableAmountService osBuyableAmountService;
 
     /**
      * 해외 주식 거래 가능한 금액을 조회하는 엔드포인트
