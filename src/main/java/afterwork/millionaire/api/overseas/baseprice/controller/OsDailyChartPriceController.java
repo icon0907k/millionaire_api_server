@@ -1,5 +1,7 @@
 package afterwork.millionaire.api.overseas.baseprice.controller;
 
+import afterwork.millionaire.api.overseas.baseprice.dto.OsDailyChartPriceRequest;
+import afterwork.millionaire.api.overseas.baseprice.service.OsDailyChartPriceService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
@@ -29,8 +31,8 @@ public class OsDailyChartPriceController {
      */
     @GetMapping
     public Mono<ResponseEntity<Map<String, Object>>> inquireDailyChartPrice(
-            @ModelAttribute OsDailyChartPriceRequest request,
-            @RequestHeader HttpHeaders headers
+            @RequestHeader HttpHeaders headers,
+            @ModelAttribute OsDailyChartPriceRequest request
     ) {
         // 서비스 계층에서 일별 차트 가격 조회 후 반환
         return osDailyChartPriceService.getOverseasStockDailyChartPrice(request, headers);
