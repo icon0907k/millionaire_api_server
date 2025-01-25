@@ -3,7 +3,6 @@ package afterwork.millionaire.api.overseas.baseprice.controller;
 import afterwork.millionaire.api.overseas.baseprice.dto.OsDailyPriceRequest;
 import afterwork.millionaire.api.overseas.baseprice.service.OsDailyPriceService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

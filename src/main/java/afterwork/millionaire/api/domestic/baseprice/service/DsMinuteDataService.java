@@ -4,7 +4,6 @@ import afterwork.millionaire.api.domestic.baseprice.dto.DsMinuteDataRequest;
 import afterwork.millionaire.config.ApiProperties;
 import afterwork.millionaire.util.WebClientUtils;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;

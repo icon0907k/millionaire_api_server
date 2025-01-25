@@ -19,7 +19,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class DsTradingOrderController {
 
-    private DsTradingOrderService dsTradingOrderService;
+    private final DsTradingOrderService dsTradingOrderService;
 
     /**
      * 국내 주식 거래 주문을 처리하는 엔드포인트입니다.
