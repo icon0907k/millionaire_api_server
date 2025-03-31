@@ -8,6 +8,7 @@ import lombok.Data;
  * 해외 주식 매수 가능한 금액을 조회하기 위한 요청 데이터 클래스입니다.
  * 해당 클래스는 주식 거래를 위한 필수 매개변수를 포함하고 있습니다.
  */
+
 @Data
 @AllArgsConstructor
 public class OsBuyableAmountRequest {
